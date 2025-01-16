@@ -4,7 +4,7 @@ body {
   grid-template-rows: 1fr 2fr 1fr;
   height: 100vh;
   width: 100%;
-  background-color: rgb(212, 242, 250);
+  background-color: rgb(204, 201, 239);
 }
 
 #slideShowContainer {
@@ -12,7 +12,7 @@ body {
   position: relative;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
-  background-color: rgb(212, 242, 250);
+  background-color: rgb(204, 201, 239);
   grid-column: 1/2;
   grid-row: 2/3;
   justify-items: center;
@@ -24,7 +24,7 @@ body {
 #frameLeft {
   display: flex;
   position: absolute;
-  background-color: rgb(212, 242, 250);
+  background-color: rgb(204, 201, 239);
   height: 100%;
   min-height: 550px;
   width: 33.5%;
@@ -36,7 +36,7 @@ body {
 #frameRight {
   display: flex;
   position: absolute;
-  background-color: rgb(212, 242, 250);
+  background-color: rgb(204, 201, 239);
   height: 100%;
   min-height: 550px;
   width: 33.5%;

@@ -7,7 +7,7 @@ const arrowRight = document.getElementById("imgArrowRight");
 
 arrowRight.addEventListener("click", () => {
   let { chosenImg, dataIndex } = getActiveImageData();
-  
+
   if (dataIndex <= 4) {
     updateCircleColorArrowRight();
     chosenImg.id = "three";
@@ -107,3 +107,65 @@ function getActiveImageData() {
   let dataIndex = parseInt(chosenImg.dataset.index);
   return { chosenImg, dataIndex };
 }
+
+let rightDirection = true;
+function repeatAction() {
+  let { chosenImg, dataIndex } = getActiveImageData();
+
+  if (rightDirection === true) {
+    console.log(dataIndex);
+    updateCircleColorArrowRight();
+    chosenImg.id = "three";
+    if (chosenImg.style.transform) {
+      chosenImg.style.transform = `translateX(${-1515}px)`;
+    } else {
+      chosenImg.style.transform = `translateX(${-815}px)`;
+      setTimeout(() => {
+        chosenImg.id = "one";
+      }, 500);
+
+      dataIndex = parseInt(dataIndex) + 1;
+      const nextImg = document.querySelector(`[data-index="${dataIndex}"]`);
+      nextImg.style.transform = `translateX(${-703}px)`;
+      setTimeout(() => {
+        nextImg.id = "midreset";
+        nextImg.style.transform = "";
+      }, 500);
+
+      chosenImg.classList.remove("active");
+      nextImg.classList.add("active");
+    }
+    if(dataIndex===5) {
+      rightDirection = false;
+    }
+  } else {
+    rightDirection = false;
+    updateCircleColorArrowLeft();
+    chosenImg.id = "three";
+    if (chosenImg.style.transform) {
+      chosenImg.style.transform = `translateX(${1515}px)`;
+    } else {
+      chosenImg.style.transform = `translateX(${703}px)`;
+      setTimeout(() => {
+        chosenImg.id = "four";
+      }, 500);
+
+      dataIndex = parseInt(dataIndex) - 1;
+      const nextImg = document.querySelector(`[data-index="${dataIndex}"]`);
+      nextImg.style.transform = `translateX(${815}px)`;
+      setTimeout(() => {
+        nextImg.id = "midreset";
+        nextImg.style.transform = "";
+      }, 500);
+
+      chosenImg.classList.remove("active");
+      nextImg.classList.add("active");
+    }
+    if(dataIndex===1) {
+      rightDirection = true;
+    }
+  }
+}
+
+// Starte die wiederholte Ausführung alle 2 Sekunden
+setInterval(repeatAction, 5000);
