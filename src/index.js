@@ -176,7 +176,7 @@ function repeatAction() {
 let autoSlideTimer; // Timer für die automatische Navigation
 let isAutoSlideActive = true; // Status der Automatik
 const autoSlideInterval = 5000; // 5 Sekunden für automatische Navigation
-const pauseDuration = 3000; // 15 Sekunden Pause nach Benutzeraktion
+const pauseDuration = 15000; // 15 Sekunden Pause nach Benutzeraktion
 
 // Starte die automatische Navigation
 const startAutoSlide = () => {
