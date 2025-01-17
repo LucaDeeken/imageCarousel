@@ -6,8 +6,8 @@ const arrowLeft = document.getElementById("imgArrowLeft");
 const arrowRight = document.getElementById("imgArrowRight");
 
 arrowRight.addEventListener("click", () => {
+  pauseAutoSlide();
   let { chosenImg, dataIndex } = getActiveImageData();
-
   if (dataIndex <= 4) {
     updateCircleColorArrowRight();
     chosenImg.id = "three";
@@ -36,6 +36,7 @@ arrowRight.addEventListener("click", () => {
 });
 
 arrowLeft.addEventListener("click", () => {
+  pauseAutoSlide();
   let { chosenImg, dataIndex } = getActiveImageData();
   if (dataIndex >= 2) {
     updateCircleColorArrowLeft();
@@ -105,15 +106,21 @@ function updateCircleColorArrowLeft() {
 function getActiveImageData() {
   const chosenImg = document.querySelector(".active");
   let dataIndex = parseInt(chosenImg.dataset.index);
+  switch (dataIndex) {
+    case 1:
+      rightDirection = true;
+      break;
+    case 5:
+      rightDirection = false;
+      break;
+  }
   return { chosenImg, dataIndex };
 }
 
 let rightDirection = true;
 function repeatAction() {
   let { chosenImg, dataIndex } = getActiveImageData();
-
   if (rightDirection === true) {
-    console.log(dataIndex);
     updateCircleColorArrowRight();
     chosenImg.id = "three";
     if (chosenImg.style.transform) {
@@ -135,11 +142,10 @@ function repeatAction() {
       chosenImg.classList.remove("active");
       nextImg.classList.add("active");
     }
-    if(dataIndex===5) {
+    if (dataIndex === 5) {
       rightDirection = false;
     }
   } else {
-    rightDirection = false;
     updateCircleColorArrowLeft();
     chosenImg.id = "three";
     if (chosenImg.style.transform) {
@@ -161,11 +167,33 @@ function repeatAction() {
       chosenImg.classList.remove("active");
       nextImg.classList.add("active");
     }
-    if(dataIndex===1) {
+    if (dataIndex === 1) {
       rightDirection = true;
     }
   }
 }
 
-// Starte die wiederholte Ausführung alle 2 Sekunden
-setInterval(repeatAction, 5000);
+let autoSlideTimer; // Timer für die automatische Navigation
+let isAutoSlideActive = true; // Status der Automatik
+const autoSlideInterval = 5000; // 5 Sekunden für automatische Navigation
+const pauseDuration = 3000; // 15 Sekunden Pause nach Benutzeraktion
+
+// Starte die automatische Navigation
+const startAutoSlide = () => {
+  if (!isAutoSlideActive) {
+    return; // Keine erneute Aktivierung, wenn bereits aktiv
+  }
+  clearInterval(autoSlideTimer); // Bestehenden Timer stoppen
+  autoSlideTimer = setInterval(repeatAction, autoSlideInterval);
+};
+
+// Pausiere die automatische Navigation
+const pauseAutoSlide = () => {
+  clearInterval(autoSlideTimer); // Automatik anhalten
+  isAutoSlideActive = false; // Automatik deaktivieren
+  setTimeout(() => {
+    isAutoSlideActive = true; // Automatik wieder aktivieren
+    startAutoSlide(); // Automatik neu starten
+  }, pauseDuration); // Pause für 15 Sekunden
+};
+startAutoSlide();
